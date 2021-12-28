@@ -1,0 +1,25 @@
+---
+- name: Pull podman images
+  containers.podman.podman_image:
+    name: "{{ item.name }}"
+    tag: "{{ item.tag | default(omit) }}"
+  loop: "{{ podman_images }}"
+
+- name: Manage pods
+  containers.podman.podman_pod:
+    name: "{{ item.name }}"
+    publish: "{{ item.ports | default(omit) }}"
+    ip: "{{ item.ip | default(omit) }}"
+    state: "{{ item.state | default(omit) }}"
+  loop: "{{ podman_pods }}"
+
+- name: Manage containers
+  containers.podman.podman_container:
+    name: "{{ item.name }}"
+    image: "{{ item.image }}"
+    restart_policy: "{{ item.restart_policy }}"
+    env: "{{ item.env | default(omit) }}"
+    pod: "{{ item.pod | default(omit) }}"
+    volume: "{{ item.volume | default(omit) }}"
+  loop: "{{ podman_containers }}"
+  no_log: true
