@@ -1,14 +1,18 @@
 ---
-- name: Pull podman images
+- name: Manage podman images
   containers.podman.podman_image:
+    build: "{{ item.build | default(omit) }}"
+    force: "{{ item.force | default(omit) }}"
     name: "{{ item.name }}"
+    path: "{{ item.path | default(omit) }}"
+    state: "{{ item.state | default(omit) }}"
     tag: "{{ item.tag | default(omit) }}"
   loop: "{{ podman_images }}"
 
 - name: Manage pods
   containers.podman.podman_pod:
     name: "{{ item.name }}"
-    publish: "{{ item.ports | default(omit) }}"
+    publish: "{{ item.publish | default(omit) }}"
     ip: "{{ item.ip | default(omit) }}"
     state: "{{ item.state | default(omit) }}"
   loop: "{{ podman_pods }}"
@@ -17,9 +21,10 @@
   containers.podman.podman_container:
     name: "{{ item.name }}"
     image: "{{ item.image }}"
-    restart_policy: "{{ item.restart_policy }}"
+    restart_policy: "{{ item.restart_policy | default(omit) }}"
     env: "{{ item.env | default(omit) }}"
     pod: "{{ item.pod | default(omit) }}"
+    recreate: "{{ item.recreate | default(omit) }}"
     volume: "{{ item.volume | default(omit) }}"
   loop: "{{ podman_containers }}"
   no_log: true
