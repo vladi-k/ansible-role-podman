@@ -11,6 +11,7 @@ Requirements
 Role Variables
 --------------
 
+* `podman_git_repos` - list of git repos to fetch.
 * `podman_images` - list images to pull.
 * `podman_pods` - list of pods to manage.
 * `podman_containers` - list of containers to manage.
