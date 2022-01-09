@@ -1,4 +1,19 @@
 ---
+- name: Get podman repos from git
+  ansible.builtin.git:
+    dest: "{{ item.dest }}"
+    force: "{{ item.force | default(omit) }}"
+    gpg_whitelist: "{{ item.gpg_whitelist | default(omit) }}"
+    key_file: "{{ item.key_file | default(omit) }}"
+    recursive: "{{ item.recursive | default(omit) }}"
+    reference: "{{ item.reference | default(omit) }}"
+    refspec: "{{ item.refspec | default(omit) }}"
+    remote: "{{ item.remote | default(omit) }}"
+    repo: "{{ item.repo }}"
+    verify_commit: "{{ item.verify_commit | default(omit) }}"
+    version: "{{ item.version | default(omit) }}"
+  loop: "{{ podman_git_repos }}"
+
 - name: Manage podman images
   containers.podman.podman_image:
     build: "{{ item.build | default(omit) }}"
@@ -26,5 +41,7 @@
     pod: "{{ item.pod | default(omit) }}"
     recreate: "{{ item.recreate | default(omit) }}"
     volume: "{{ item.volume | default(omit) }}"
+    etc_hosts: "{{ item.etc_hosts | default(omit) }}"
+    rm: "{{ item.rm | default(omit) }}"
   loop: "{{ podman_containers }}"
   no_log: true
