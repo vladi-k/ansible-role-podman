@@ -23,6 +23,8 @@
     state: "{{ item.state | default(omit) }}"
     tag: "{{ item.tag | default(omit) }}"
   loop: "{{ podman_images }}"
+  tags:
+    - podman_images
 
 - name: Manage pods
   containers.podman.podman_pod:
@@ -31,6 +33,8 @@
     ip: "{{ item.ip | default(omit) }}"
     state: "{{ item.state | default(omit) }}"
   loop: "{{ podman_pods }}"
+  tags:
+    - podman_pods
 
 - name: Manage containers
   containers.podman.podman_container:
@@ -43,5 +47,9 @@
     volume: "{{ item.volume | default(omit) }}"
     etc_hosts: "{{ item.etc_hosts | default(omit) }}"
     rm: "{{ item.rm | default(omit) }}"
+    ip: "{{ item.ip | default(omit) }}"
+    sysctl: "{{ item.sysctl | default(omit) }}"
   loop: "{{ podman_containers }}"
   no_log: true
+  tags:
+    - podman_containers
