@@ -38,17 +38,22 @@
 
 - name: Manage containers
   containers.podman.podman_container:
-    name: "{{ item.name }}"
-    image: "{{ item.image }}"
-    restart_policy: "{{ item.restart_policy | default(omit) }}"
+    command: "{{ item.command | default(omit) }}"
+    dns: "{{ item.dns | default(omit) }}"
+    dns_option: "{{ item.dns_option | default(omit) }}"
+    dns_search: "{{ item.dns_search | default(omit) }}"
+    entrypoint: "{{ item.entrypoint | default(omit) }}"
     env: "{{ item.env | default(omit) }}"
+    etc_hosts: "{{ item.etc_hosts | default(omit) }}"
+    image: "{{ item.image }}"
+    ip: "{{ item.ip | default(omit) }}"
+    name: "{{ item.name }}"
     pod: "{{ item.pod | default(omit) }}"
     recreate: "{{ item.recreate | default(omit) }}"
-    volume: "{{ item.volume | default(omit) }}"
-    etc_hosts: "{{ item.etc_hosts | default(omit) }}"
+    restart_policy: "{{ item.restart_policy | default(omit) }}"
     rm: "{{ item.rm | default(omit) }}"
-    ip: "{{ item.ip | default(omit) }}"
     sysctl: "{{ item.sysctl | default(omit) }}"
+    volume: "{{ item.volume | default(omit) }}"
   loop: "{{ podman_containers }}"
   no_log: true
   tags:
