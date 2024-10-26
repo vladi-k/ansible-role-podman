@@ -1,0 +1,15 @@
+---
+- name: Restart quadlet containers
+  ansible.builtin.systemd:
+    name: "{{ __name }}"
+    state: restarted
+    daemon_reload: true
+  vars:
+    __quadlet_filename: "{{ __container.item.quadlet_filename | default('') }}"
+    __name: "{{ __quadlet_filename if __quadlet_filename | length > 0 else __container.item.name }}"
+  loop: "{{ __podman_containers.results }}"
+  loop_control:
+    loop_var: __container
+  when:
+    - __container.item.state == 'quadlet'
+    - __container.changed | bool
