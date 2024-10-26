@@ -3,3 +3,6 @@ podman_git_repos: []
 podman_images: []
 podman_pods: []
 podman_containers: []
+
+podman_auto_update_enabled: false
+podman_auto_update_state: stopped
