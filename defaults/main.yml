@@ -4,5 +4,8 @@ podman_images: []
 podman_pods: []
 podman_containers: []
 
+podman_auto_update_systemd_units:
+  - podman-auto-update.service
+  - podman-auto-update.timer
 podman_auto_update_enabled: false
 podman_auto_update_state: stopped

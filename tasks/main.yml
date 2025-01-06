@@ -209,8 +209,9 @@
   notify:
     - Restart quadlet containers
 
-- name: Configure podman-auto-update.service
+- name: Configure podman-auto-update systemd units
   ansible.builtin.systemd:
-    name: podman-auto-update.service
+    name: "{{ item }}"
     enabled: "{{ podman_auto_update_enabled }}"
     state: "{{ podman_auto_update_state }}"
+  loop: "{{ podman_auto_update_systemd_units }}"
