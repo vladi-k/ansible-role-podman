@@ -1,4 +1,6 @@
 ---
+podman_packages:
+  - podman
 podman_git_repos: []
 podman_images: []
 podman_pods: []

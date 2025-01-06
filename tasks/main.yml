@@ -1,4 +1,9 @@
 ---
+- name: Install Podman packages
+  ansible.builtin.package:
+    name: "{{ podman_packages }}"
+    state: present
+
 - name: Get podman repos from git
   ansible.builtin.git:
     dest: "{{ item.dest }}"
